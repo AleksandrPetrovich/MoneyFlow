@@ -1,18 +1,45 @@
 package com.babichdev.moneyflow.presentation.screens.home
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.babichdev.moneyflow.presentation.components.cards.BalanceCard
+import com.babichdev.moneyflow.presentation.components.cards.TransactionItem
+import com.babichdev.moneyflow.presentation.model.fakeTransactions
 
 @Composable
 fun HomeScreen() {
-    Box(
+
+    LazyColumn(
         modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+        contentPadding = PaddingValues(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Text("Home")
+
+        item {
+            BalanceCard(
+                balance = 125430.0,
+                income = 154000.0,
+                expense = 28570.0
+            )
+        }
+
+        item {
+            Text(
+                text = "Последние операции",
+                style = MaterialTheme.typography.titleLarge
+            )
+        }
+
+        items(fakeTransactions) { transaction ->
+            TransactionItem(transaction)
+        }
     }
 }
