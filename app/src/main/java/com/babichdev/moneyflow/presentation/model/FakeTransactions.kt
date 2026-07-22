@@ -1,22 +1,28 @@
 package com.babichdev.moneyflow.presentation.model
 
 val fakeTransactions = listOf(
+
     TransactionUi(
-        title = "Зарплата",
         category = "Работа",
+        comment = "Зарплата",
         amount = 75000.0,
-        isIncome = true
+        isIncome = true,
+        date = System.currentTimeMillis()
     ),
+
     TransactionUi(
-        title = "Продукты",
         category = "Еда",
+        comment = "Продукты",
         amount = 2350.0,
-        isIncome = false
+        isIncome = false,
+        date = System.currentTimeMillis()
     ),
+
     TransactionUi(
-        title = "Кофе",
-        amount = 450.0,
         category = "Кафе",
-        isIncome = false
+        comment = "Кофе",
+        amount = 450.0,
+        isIncome = false,
+        date = System.currentTimeMillis()
     )
 )

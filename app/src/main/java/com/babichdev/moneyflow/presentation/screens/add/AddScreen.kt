@@ -20,7 +20,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun AddScreen() {
+fun AddScreen(
+    viewModel: AddViewModel
+) {
 
     var isIncome by remember { mutableStateOf(false) }
     var amount by remember { mutableStateOf("") }
@@ -78,7 +80,14 @@ fun AddScreen() {
         )
 
         Button(
-            onClick = { },
+            onClick = {
+                viewModel.addTransaction(
+                    amount = amount,
+                    category = category,
+                    comment = comment,
+                    isIncome = isIncome
+                )
+            },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Сохранить")

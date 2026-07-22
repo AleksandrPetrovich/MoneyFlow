@@ -8,14 +8,18 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.babichdev.moneyflow.presentation.components.cards.BalanceCard
 import com.babichdev.moneyflow.presentation.components.cards.TransactionItem
-import com.babichdev.moneyflow.presentation.model.fakeTransactions
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    viewModel: HomeViewModel
+) {
+    val transactions by viewModel.transactions.collectAsStateWithLifecycle()
 
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -38,7 +42,7 @@ fun HomeScreen() {
             )
         }
 
-        items(fakeTransactions) { transaction ->
+        items(transactions) { transaction ->
             TransactionItem(transaction)
         }
     }

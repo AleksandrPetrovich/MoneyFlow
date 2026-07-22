@@ -9,9 +9,13 @@ data class TransactionEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
 
-    val title: String,
-
     val amount: Double,
 
-    val isIncome: Boolean
+    val category: String,
+
+    val comment: String,
+
+    val isIncome: Boolean,
+
+    val date: Long
 )

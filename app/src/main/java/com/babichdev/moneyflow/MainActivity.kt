@@ -4,8 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
 import com.babichdev.moneyflow.ui.theme.MoneyFlowTheme
 
 class MainActivity : ComponentActivity() {
@@ -14,14 +12,16 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MoneyFlowTheme {
-                MoneyFlowApp()
+                MoneyFlowApp(
+                    appContainer = (application as MoneyFlowApplication).container
+                )
             }
         }
     }
 }
 
-@Preview
+/*@Preview
 @Composable
 fun MoneyFlowAppPreview(){
     MoneyFlowApp()
-}
+}*/
