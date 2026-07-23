@@ -23,5 +23,7 @@ class MainActivity : ComponentActivity() {
 /*@Preview
 @Composable
 fun MoneyFlowAppPreview(){
-    MoneyFlowApp()
+    MoneyFlowApp(
+        appContainer = (application as MoneyFlowApplication).container
+    )
 }*/
