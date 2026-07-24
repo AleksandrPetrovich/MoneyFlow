@@ -8,15 +8,16 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.babichdev.moneyflow.di.AppContainer
 import com.babichdev.moneyflow.presentation.screens.add.AddScreen
+import com.babichdev.moneyflow.presentation.screens.add.AddViewModel
+import com.babichdev.moneyflow.presentation.screens.add.AddViewModelFactory
 import com.babichdev.moneyflow.presentation.screens.history.HistoryScreen
+import com.babichdev.moneyflow.presentation.screens.history.HistoryViewModel
+import com.babichdev.moneyflow.presentation.screens.history.HistoryViewModelFactory
 import com.babichdev.moneyflow.presentation.screens.home.HomeScreen
 import com.babichdev.moneyflow.presentation.screens.home.HomeViewModel
 import com.babichdev.moneyflow.presentation.screens.home.HomeViewModelFactory
 import com.babichdev.moneyflow.presentation.screens.settings.SettingsScreen
 import com.babichdev.moneyflow.presentation.screens.statistics.StatisticsScreen
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.babichdev.moneyflow.presentation.screens.add.AddViewModel
-import com.babichdev.moneyflow.presentation.screens.add.AddViewModelFactory
 
 @Composable
 fun AppNavHost(
@@ -42,7 +43,16 @@ fun AppNavHost(
         }
 
         composable(Screen.History.route) {
-            HistoryScreen()
+
+            val viewModel: HistoryViewModel = viewModel(
+                factory = HistoryViewModelFactory(
+                    appContainer.repository
+                )
+            )
+
+            HistoryScreen(
+                viewModel = viewModel
+            )
         }
 
         composable(Screen.Add.route) {

@@ -21,6 +21,8 @@ fun HomeScreen(
 ) {
     val transactions by viewModel.transactions.collectAsStateWithLifecycle()
 
+    val balance by viewModel.balance.collectAsStateWithLifecycle()
+
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(16.dp),
@@ -29,9 +31,9 @@ fun HomeScreen(
 
         item {
             BalanceCard(
-                balance = 125430.0,
-                income = 154000.0,
-                expense = 28570.0
+                balance = balance.balance,
+                income = balance.income,
+                expense = balance.expense
             )
         }
 

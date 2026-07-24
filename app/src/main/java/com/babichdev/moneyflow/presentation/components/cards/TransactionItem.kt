@@ -1,5 +1,6 @@
 package com.babichdev.moneyflow.presentation.components.cards
 
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,15 +14,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.babichdev.moneyflow.presentation.model.TransactionUi
+import com.babichdev.moneyflow.util.DateFormatter
+import com.babichdev.moneyflow.util.MoneyFormatter
 
 @Composable
 fun TransactionItem(
-    transaction: TransactionUi
+    transaction: TransactionUi,
+    onLongClick: () -> Unit = {}
 ) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 4.dp)
+            .combinedClickable(
+                onClick = {},
+                onLongClick = onLongClick
+            )
     ) {
         Row(
             modifier = Modifier
@@ -49,10 +57,16 @@ fun TransactionItem(
             }
 
             Text(
+                text = DateFormatter.format(transaction.date),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.outline
+            )
+
+            Text(
                 text = if (transaction.isIncome)
-                    "+${transaction.amount.toInt()} ₽"
+                    "+${MoneyFormatter.format(transaction.amount)}"
                 else
-                    "-${transaction.amount.toInt()} ₽",
+                    "-${MoneyFormatter.format(transaction.amount)}",
                 color = if (transaction.isIncome)
                     Color(0xFF2E7D32)
                 else

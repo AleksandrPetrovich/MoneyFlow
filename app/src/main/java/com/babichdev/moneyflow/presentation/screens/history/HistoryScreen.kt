@@ -16,13 +16,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.babichdev.moneyflow.presentation.components.cards.TransactionItem
-import com.babichdev.moneyflow.presentation.model.fakeTransactions
 
 @Composable
-fun HistoryScreen() {
+fun HistoryScreen(
+    viewModel: HistoryViewModel
+) {
 
     var searchText by remember { mutableStateOf("") }
+
+    val transactions by viewModel.transactions.collectAsStateWithLifecycle()
 
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -48,7 +52,7 @@ fun HistoryScreen() {
             )
         }
 
-        items(fakeTransactions) { transaction ->
+        items(transactions) { transaction ->
             TransactionItem(transaction)
         }
     }

@@ -17,4 +17,14 @@ class TransactionRepository(
     ) {
         dao.insertTransaction(transaction)
     }
+
+    suspend fun deleteTransaction(
+        transaction: TransactionEntity
+    ) {
+        dao.deleteTransaction(transaction)
+    }
+
+    suspend fun deleteTransaction(id: Long) {
+        dao.deleteById(id)
+    }
 }
