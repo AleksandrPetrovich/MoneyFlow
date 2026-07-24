@@ -28,6 +28,16 @@ fun HistoryScreen(
 
     val transactions by viewModel.transactions.collectAsStateWithLifecycle()
 
+    val filteredTransactions = transactions.filter { transaction ->
+
+        if (searchText.isBlank()) {
+            true
+        } else {
+            transaction.category.contains(searchText, ignoreCase = true) ||
+                    transaction.comment.contains(searchText, ignoreCase = true)
+        }
+    }
+
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(16.dp),
@@ -52,7 +62,7 @@ fun HistoryScreen(
             )
         }
 
-        items(transactions) { transaction ->
+        items(filteredTransactions) { transaction ->
             TransactionItem(transaction)
         }
     }
