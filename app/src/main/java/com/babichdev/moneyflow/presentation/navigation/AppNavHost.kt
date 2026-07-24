@@ -18,6 +18,8 @@ import com.babichdev.moneyflow.presentation.screens.home.HomeViewModel
 import com.babichdev.moneyflow.presentation.screens.home.HomeViewModelFactory
 import com.babichdev.moneyflow.presentation.screens.settings.SettingsScreen
 import com.babichdev.moneyflow.presentation.screens.statistics.StatisticsScreen
+import com.babichdev.moneyflow.presentation.screens.statistics.StatisticsViewModel
+import com.babichdev.moneyflow.presentation.screens.statistics.StatisticsViewModelFactory
 
 @Composable
 fun AppNavHost(
@@ -69,7 +71,16 @@ fun AppNavHost(
         }
 
         composable(Screen.Statistics.route) {
-            StatisticsScreen()
+
+            val viewModel: StatisticsViewModel = viewModel(
+                factory = StatisticsViewModelFactory(
+                    appContainer.repository
+                )
+            )
+
+            StatisticsScreen(
+                viewModel = viewModel
+            )
         }
 
         composable(Screen.Settings.route) {

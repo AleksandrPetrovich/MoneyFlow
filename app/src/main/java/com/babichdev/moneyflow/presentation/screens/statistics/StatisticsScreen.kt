@@ -1,125 +1,114 @@
 package com.babichdev.moneyflow.presentation.screens.statistics
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.babichdev.moneyflow.util.MoneyFormatter
+import androidx.compose.foundation.layout.Row
 
 @Composable
-fun StatisticsScreen() {
+fun StatisticsScreen(
+    viewModel: StatisticsViewModel
+) {
 
-    LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(16.dp),
+    val statistics by viewModel.statistics.collectAsStateWithLifecycle()
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
 
-        item {
-            Text(
-                text = "Статистика",
-                style = MaterialTheme.typography.headlineSmall
-            )
-        }
+        Text(
+            text = "Статистика",
+            style = MaterialTheme.typography.headlineSmall
+        )
 
-        item {
-            StatisticCard(
-                title = "Доходы",
-                value = "154 000 ₽"
-            )
-        }
+        StatCard(
+            title = "Доходы",
+            value = MoneyFormatter.format(statistics.income)
+        )
 
-        item {
-            StatisticCard(
-                title = "Расходы",
-                value = "28 570 ₽"
-            )
-        }
+        StatCard(
+            title = "Расходы",
+            value = MoneyFormatter.format(statistics.expense)
+        )
 
-        item {
-            Text(
-                text = "Распределение расходов",
-                style = MaterialTheme.typography.titleLarge
-            )
-        }
+        StatCard(
+            title = "Баланс",
+            value = MoneyFormatter.format(statistics.balance)
+        )
 
-        item {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(220.dp),
-                contentAlignment = Alignment.Center
+        StatCard(
+            title = "Операций",
+            value = statistics.operationsCount.toString()
+        )
+
+        Text(
+            text = "Расходы по категориям",
+            style = MaterialTheme.typography.titleLarge
+        )
+
+        statistics.expenseByCategory.forEach { category ->
+
+            Card(
+                modifier = Modifier.fillMaxWidth()
             ) {
-                Box(
+
+                Row(
                     modifier = Modifier
-                        .size(180.dp)
-                        .clip(CircleShape)
-                        .background(MaterialTheme.colorScheme.primaryContainer)
-                )
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+
+                    Text(
+                        text = category.category,
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+
+                    Text(
+                        text = "${category.amount.toInt()} ₽",
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                }
             }
-        }
-
-        item {
-            Text(
-                text = "Категории",
-                style = MaterialTheme.typography.titleLarge
-            )
-        }
-
-        item {
-            StatisticCard("🍔 Еда", "12 500 ₽")
-        }
-
-        item {
-            StatisticCard("🚗 Транспорт", "3 200 ₽")
-        }
-
-        item {
-            StatisticCard("🎮 Развлечения", "5 400 ₽")
-        }
-
-        item {
-            StatisticCard("🏠 Дом", "7 470 ₽")
         }
     }
 }
 
 @Composable
-private fun StatisticCard(
+private fun StatCard(
     title: String,
     value: String
 ) {
     Card(
         modifier = Modifier.fillMaxWidth()
     ) {
-        androidx.compose.foundation.layout.Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp),
-            horizontalArrangement = Arrangement.SpaceBetween
+        Column(
+            modifier = Modifier.padding(16.dp)
         ) {
             Text(
                 text = title,
-                style = MaterialTheme.typography.titleMedium
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
 
             Text(
                 text = value,
-                style = MaterialTheme.typography.titleMedium
+                style = MaterialTheme.typography.headlineSmall
             )
         }
     }
