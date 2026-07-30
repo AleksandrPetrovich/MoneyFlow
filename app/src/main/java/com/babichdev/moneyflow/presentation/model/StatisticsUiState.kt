@@ -5,5 +5,6 @@ data class StatisticsUiState(
     val expense: Double = 0.0,
     val balance: Double = 0.0,
     val operationsCount: Int = 0,
-    val expenseByCategory: List<CategoryStatistic> = emptyList()
+    val expenseByCategory: List<CategoryStatistic> = emptyList(),
+    val selectedPeriod: PeriodFilter = PeriodFilter.ALL
 )

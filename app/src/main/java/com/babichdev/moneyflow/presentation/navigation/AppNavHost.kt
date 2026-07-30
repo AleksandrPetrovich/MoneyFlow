@@ -4,9 +4,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.babichdev.moneyflow.di.AppContainer
+import com.babichdev.moneyflow.presentation.app.AppViewModel
 import com.babichdev.moneyflow.presentation.screens.add.AddScreen
 import com.babichdev.moneyflow.presentation.screens.add.AddViewModel
 import com.babichdev.moneyflow.presentation.screens.add.AddViewModelFactory
@@ -25,6 +28,7 @@ import com.babichdev.moneyflow.presentation.screens.statistics.StatisticsViewMod
 fun AppNavHost(
     navController: NavHostController,
     appContainer: AppContainer,
+    appViewModel: AppViewModel,
     modifier: Modifier = Modifier
 ) {
     NavHost(
@@ -41,7 +45,14 @@ fun AppNavHost(
                 )
             )
 
-            HomeScreen(viewModel)
+            HomeScreen(
+                viewModel = viewModel,
+                onEditTransaction = { transactionId ->
+                    navController.navigate(
+                        Screen.Add.createRoute(transactionId)
+                    )
+                }
+            )
         }
 
         composable(Screen.History.route) {
@@ -57,16 +68,31 @@ fun AppNavHost(
             )
         }
 
-        composable(Screen.Add.route) {
+        composable(
+            route = Screen.Add.route,
+            arguments = listOf(
+                navArgument("transactionId") {
+                    type = NavType.LongType
+                    defaultValue = -1L
+                }
+            )
+        ) { backStackEntry ->
+
+            val transactionId =
+                backStackEntry.arguments?.getLong("transactionId") ?: -1L
 
             val viewModel: AddViewModel = viewModel(
                 factory = AddViewModelFactory(
-                    appContainer.repository
+                    repository = appContainer.repository,
+                    transactionId = transactionId
                 )
             )
 
             AddScreen(
-                viewModel = viewModel
+                viewModel = viewModel,
+                onSaved = {
+                    navController.popBackStack()
+                }
             )
         }
 
@@ -84,7 +110,9 @@ fun AppNavHost(
         }
 
         composable(Screen.Settings.route) {
-            SettingsScreen()
+            SettingsScreen(
+                viewModel = appViewModel
+            )
         }
     }
 }

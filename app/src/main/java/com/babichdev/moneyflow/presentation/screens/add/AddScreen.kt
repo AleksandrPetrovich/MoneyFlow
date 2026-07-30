@@ -1,16 +1,28 @@
 package com.babichdev.moneyflow.presentation.screens.add
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.selectable
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.AttachMoney
+import androidx.compose.material.icons.outlined.DateRange
+import androidx.compose.material.icons.outlined.EditNote
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDialog
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -18,16 +30,39 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.babichdev.moneyflow.presentation.components.input.CategoryDropdown
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 @Composable
 fun AddScreen(
-    viewModel: AddViewModel
+    viewModel: AddViewModel,
+    onSaved: () -> Unit
 ) {
 
-    var isIncome by remember { mutableStateOf(false) }
-    var amount by remember { mutableStateOf("") }
-    var category by remember { mutableStateOf("") }
-    var comment by remember { mutableStateOf("") }
+    val amount by viewModel.amount.collectAsStateWithLifecycle()
+    val category by viewModel.category.collectAsStateWithLifecycle()
+    val comment by viewModel.comment.collectAsStateWithLifecycle()
+    val isIncome by viewModel.isIncome.collectAsStateWithLifecycle()
+    val date by viewModel.date.collectAsStateWithLifecycle()
+    val canSave by viewModel.canSave.collectAsStateWithLifecycle()
+
+    val formattedDate = remember(date) {
+        SimpleDateFormat(
+            "dd.MM.yyyy",
+            Locale.getDefault()
+        ).format(Date(date))
+    }
+
+    var showDeleteDialog by remember {
+        mutableStateOf(false)
+    }
+
+    var showDatePicker by remember {
+        mutableStateOf(false)
+    }
 
     Column(
         modifier = Modifier
@@ -37,7 +72,10 @@ fun AddScreen(
     ) {
 
         Text(
-            text = "Новая операция",
+            text = if (viewModel.isEditMode)
+                "Редактирование операции"
+            else
+                "Новая операция",
             style = MaterialTheme.typography.headlineSmall
         )
 
@@ -47,51 +85,186 @@ fun AddScreen(
                 text = "Расход",
                 selected = !isIncome
             ) {
-                isIncome = false
+                viewModel.onIncomeChanged(false)
             }
 
             RowOption(
                 text = "Доход",
                 selected = isIncome
             ) {
-                isIncome = true
+                viewModel.onIncomeChanged(true)
             }
         }
 
         OutlinedTextField(
             value = amount,
-            onValueChange = { amount = it },
+            onValueChange = viewModel::onAmountChanged,
             label = { Text("Сумма") },
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Outlined.AttachMoney,
+                    contentDescription = null
+                )
+            },
             modifier = Modifier.fillMaxWidth()
         )
 
-        OutlinedTextField(
-            value = category,
-            onValueChange = { category = it },
-            label = { Text("Категория") },
-            modifier = Modifier.fillMaxWidth()
+        CategoryDropdown(
+            selectedCategory = category,
+            isIncome = isIncome,
+            onCategorySelected = viewModel::onCategoryChanged
         )
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable {
+                    showDatePicker = true
+                }
+        ) {
+
+            OutlinedTextField(
+                value = formattedDate,
+                onValueChange = {},
+                readOnly = true,
+                enabled = false,
+                label = {
+                    Text("Дата")
+                },
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Outlined.DateRange,
+                        contentDescription = null
+                    )
+                },
+                modifier = Modifier.fillMaxWidth()
+            )
+
+        }
 
         OutlinedTextField(
             value = comment,
-            onValueChange = { comment = it },
+            onValueChange = viewModel::onCommentChanged,
             label = { Text("Комментарий") },
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Outlined.EditNote,
+                    contentDescription = null
+                )
+            },
             modifier = Modifier.fillMaxWidth()
         )
 
         Button(
+            enabled = canSave,
             onClick = {
-                viewModel.addTransaction(
-                    amount = amount,
-                    category = category,
-                    comment = comment,
-                    isIncome = isIncome
-                )
+                viewModel.saveTransaction()
+                onSaved()
             },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Сохранить")
+            Text(
+                if (viewModel.isEditMode)
+                    "Обновить"
+                else
+                    "Сохранить"
+            )
         }
+
+        if (viewModel.isEditMode) {
+
+            Button(
+                onClick = {
+                    showDeleteDialog = true
+                },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Удалить")
+            }
+
+        }
+    }
+
+    if (showDeleteDialog) {
+
+        AlertDialog(
+            onDismissRequest = {
+                showDeleteDialog = false
+            },
+            title = {
+                Text("Удалить операцию?")
+            },
+            text = {
+                Text("Это действие нельзя отменить.")
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        showDeleteDialog = false
+                        viewModel.deleteTransaction()
+                        onSaved()
+                    }
+                ) {
+                    Text("Удалить")
+                }
+            },
+            dismissButton = {
+                Button(
+                    onClick = {
+                        showDeleteDialog = false
+                    }
+                ) {
+                    Text("Отмена")
+                }
+            }
+        )
+    }
+
+    if (showDatePicker) {
+
+        val datePickerState = rememberDatePickerState(
+            initialSelectedDateMillis = date
+        )
+
+        DatePickerDialog(
+            onDismissRequest = {
+                showDatePicker = false
+            },
+            confirmButton = {
+
+                TextButton(
+                    onClick = {
+
+                        datePickerState.selectedDateMillis?.let {
+                            viewModel.onDateChanged(it)
+                        }
+
+                        showDatePicker = false
+                    }
+                ) {
+                    Text("OK")
+                }
+
+            },
+            dismissButton = {
+
+                TextButton(
+                    onClick = {
+                        showDatePicker = false
+                    }
+                ) {
+                    Text("Отмена")
+                }
+
+            }
+        ) {
+
+            DatePicker(
+                state = datePickerState
+            )
+
+        }
+
     }
 }
 

@@ -6,12 +6,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.babichdev.moneyflow.di.AppContainer
+import com.babichdev.moneyflow.presentation.app.AppViewModel
 import com.babichdev.moneyflow.presentation.components.navigation.BottomNavigationBar
 import com.babichdev.moneyflow.presentation.navigation.AppNavHost
 
 @Composable
 fun MoneyFlowApp(
-    appContainer: AppContainer
+    appContainer: AppContainer,
+    appViewModel: AppViewModel
 ) {
 
     val navController = rememberNavController()
@@ -27,6 +29,7 @@ fun MoneyFlowApp(
         AppNavHost(
             navController = navController,
             appContainer = appContainer,
+            appViewModel = appViewModel,
             modifier = Modifier.padding(innerPadding)
         )
     }

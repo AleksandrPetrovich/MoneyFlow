@@ -1,7 +1,7 @@
 package com.babichdev.moneyflow.presentation.navigation
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.AddCircle
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.outlined.BarChart
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.List
@@ -26,11 +26,19 @@ sealed class Screen(
         icon = Icons.Outlined.List
     )
 
-    data object Add : Screen(
-        route = "add",
+    object Add : Screen(
+        route = "add?transactionId={transactionId}",
         title = "Добавить",
-        icon = Icons.Outlined.AddCircle
+        icon = Icons.Default.Add
     )
+
+    fun createRoute(transactionId: Long? = null): String {
+        return if (transactionId == null) {
+            "add"
+        } else {
+            "add?transactionId=$transactionId"
+        }
+    }
 
     data object Statistics : Screen(
         route = "statistics",

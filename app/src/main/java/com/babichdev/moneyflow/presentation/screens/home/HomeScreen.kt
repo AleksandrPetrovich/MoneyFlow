@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -14,10 +13,12 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.babichdev.moneyflow.presentation.components.cards.BalanceCard
 import com.babichdev.moneyflow.presentation.components.cards.TransactionItem
+import androidx.compose.foundation.lazy.items
 
 @Composable
 fun HomeScreen(
-    viewModel: HomeViewModel
+    viewModel: HomeViewModel,
+    onEditTransaction: (Long) -> Unit = {}
 ) {
     val transactions by viewModel.transactions.collectAsStateWithLifecycle()
 
@@ -45,7 +46,13 @@ fun HomeScreen(
         }
 
         items(transactions) { transaction ->
-            TransactionItem(transaction)
+
+            TransactionItem(
+                transaction = transaction,
+                onLongClick = {
+                    onEditTransaction(transaction.id)
+                }
+            )
         }
     }
 }

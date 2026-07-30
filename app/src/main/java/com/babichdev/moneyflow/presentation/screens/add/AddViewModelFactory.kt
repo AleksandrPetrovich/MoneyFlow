@@ -5,14 +5,18 @@ import androidx.lifecycle.ViewModelProvider
 import com.babichdev.moneyflow.data.repository.TransactionRepository
 
 class AddViewModelFactory(
-    private val repository: TransactionRepository
+    private val repository: TransactionRepository,
+    private val transactionId: Long
 ) : ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
 
         if (modelClass.isAssignableFrom(AddViewModel::class.java)) {
-            return AddViewModel(repository) as T
+            return AddViewModel(
+                repository = repository,
+                transactionId = transactionId
+            ) as T
         }
 
         throw IllegalArgumentException("Unknown ViewModel class")

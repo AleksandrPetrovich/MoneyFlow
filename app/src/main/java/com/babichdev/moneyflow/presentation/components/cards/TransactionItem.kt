@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.babichdev.moneyflow.presentation.model.Categories
 import com.babichdev.moneyflow.presentation.model.TransactionUi
 import com.babichdev.moneyflow.util.DateFormatter
 import com.babichdev.moneyflow.util.MoneyFormatter
@@ -42,37 +43,46 @@ fun TransactionItem(
                 modifier = Modifier.weight(1f)
             ) {
 
-                Text(
-                    text = transaction.category,
-                    style = MaterialTheme.typography.bodyLarge
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+
+                    Text(
+                        text = "${Categories.findEmoji(transaction.category)} ${transaction.category}",
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+
+                    Text(
+                        text = if (transaction.isIncome)
+                            "+${MoneyFormatter.format(transaction.amount)}"
+                        else
+                            "-${MoneyFormatter.format(transaction.amount)}",
+                        color = if (transaction.isIncome)
+                            Color(0xFF2E7D32)
+                        else
+                            Color(0xFFC62828),
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                }
 
                 if (transaction.comment.isNotBlank()) {
+
                     Text(
                         text = transaction.comment,
                         style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.padding(top = 4.dp)
                     )
                 }
+
+                Text(
+                    text = DateFormatter.format(transaction.date),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.outline,
+                    modifier = Modifier.padding(top = 8.dp)
+                )
             }
-
-            Text(
-                text = DateFormatter.format(transaction.date),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.outline
-            )
-
-            Text(
-                text = if (transaction.isIncome)
-                    "+${MoneyFormatter.format(transaction.amount)}"
-                else
-                    "-${MoneyFormatter.format(transaction.amount)}",
-                color = if (transaction.isIncome)
-                    Color(0xFF2E7D32)
-                else
-                    Color(0xFFC62828),
-                style = MaterialTheme.typography.titleMedium
-            )
         }
     }
 }

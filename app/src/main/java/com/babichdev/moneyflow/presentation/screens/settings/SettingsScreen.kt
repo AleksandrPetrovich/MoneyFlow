@@ -17,14 +17,24 @@ import androidx.compose.material.icons.outlined.Savings
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.babichdev.moneyflow.presentation.app.AppViewModel
 
 @Composable
-fun SettingsScreen() {
+fun SettingsScreen(
+    viewModel: AppViewModel
+) {
+
+    val darkTheme by viewModel.darkTheme.collectAsStateWithLifecycle(
+        initialValue = false
+    )
 
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -48,11 +58,39 @@ fun SettingsScreen() {
         }
 
         item {
-            SettingsItem(
-                icon = { Icon(Icons.Outlined.DarkMode, null) },
-                title = "Тёмная тема",
-                value = "Системная"
-            )
+
+            Card(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(18.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+
+                    Icon(
+                        imageVector = Icons.Outlined.DarkMode,
+                        contentDescription = null
+                    )
+
+                    Text(
+                        text = "Тёмная тема",
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(start = 16.dp),
+                        style = MaterialTheme.typography.titleMedium
+                    )
+
+                    Switch(
+                        checked = darkTheme,
+                        onCheckedChange = {
+                            viewModel.setDarkTheme(it)
+                        }
+                    )
+                }
+            }
         }
 
         item {

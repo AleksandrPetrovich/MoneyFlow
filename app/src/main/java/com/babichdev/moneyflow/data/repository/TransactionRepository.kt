@@ -12,10 +12,22 @@ class TransactionRepository(
         return dao.getAllTransactions()
     }
 
+    suspend fun getTransactionById(
+        id: Long
+    ): TransactionEntity? {
+        return dao.getTransactionById(id)
+    }
+
     suspend fun insertTransaction(
         transaction: TransactionEntity
     ) {
         dao.insertTransaction(transaction)
+    }
+
+    suspend fun updateTransaction(
+        transaction: TransactionEntity
+    ) {
+        dao.updateTransaction(transaction)
     }
 
     suspend fun deleteTransaction(

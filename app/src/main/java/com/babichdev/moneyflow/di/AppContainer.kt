@@ -3,6 +3,7 @@ package com.babichdev.moneyflow.di
 import android.content.Context
 import androidx.room.Room
 import com.babichdev.moneyflow.data.local.database.MoneyFlowDatabase
+import com.babichdev.moneyflow.data.preferences.SettingsRepository
 import com.babichdev.moneyflow.data.repository.TransactionRepository
 
 class AppContainer(context: Context) {
@@ -15,5 +16,9 @@ class AppContainer(context: Context) {
 
     val repository = TransactionRepository(
         database.transactionDao()
+    )
+
+    val settingsRepository = SettingsRepository(
+        context
     )
 }
