@@ -13,8 +13,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.babichdev.moneyflow.R
+import com.babichdev.moneyflow.util.MoneyFormatter
 
 @Composable
 fun BalanceCard(
@@ -30,14 +33,14 @@ fun BalanceCard(
         ) {
 
             Text(
-                text = "Общий баланс",
+                text = stringResource(R.string.total_balance),
                 style = MaterialTheme.typography.titleMedium
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = "%.0f ₽".format(balance),
+                text = MoneyFormatter.format(balance),
                 style = MaterialTheme.typography.headlineLarge,
                 fontWeight = FontWeight.Bold
             )
@@ -51,14 +54,14 @@ fun BalanceCard(
 
                 Column {
                     Text(
-                        text = "Доходы",
+                        text = stringResource(R.string.income),
                         style = MaterialTheme.typography.bodyMedium
                     )
 
                     Spacer(modifier = Modifier.height(4.dp))
 
                     Text(
-                        text = "%.0f ₽".format(income),
+                        text = MoneyFormatter.format(income),
                         style = MaterialTheme.typography.titleMedium,
                         color = Color(0xFF2E7D32),
                         fontWeight = FontWeight.SemiBold
@@ -67,14 +70,14 @@ fun BalanceCard(
 
                 Column {
                     Text(
-                        text = "Расходы",
+                        text = stringResource(R.string.expense),
                         style = MaterialTheme.typography.bodyMedium
                     )
 
                     Spacer(modifier = Modifier.height(4.dp))
 
                     Text(
-                        text = "%.0f ₽".format(expense),
+                        text = MoneyFormatter.format(expense),
                         style = MaterialTheme.typography.titleMedium,
                         color = Color(0xFFC62828),
                         fontWeight = FontWeight.SemiBold

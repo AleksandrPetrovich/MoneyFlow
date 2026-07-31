@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">MoneyFlow</string>
+
+    <string name="home">Главная</string>
+    <string name="history">История</string>
+    <string name="add">Добавить</string>
+    <string name="statistics">Статистика</string>
+    <string name="settings">Настройки</string>
+
+    <string name="recent_transactions">Последние операции</string>
+    <string name="total_balance">Общий баланс</string>
+    <string name="income">Доходы</string>
+    <string name="expense">Расходы</string>
+
+    <string name="new_transaction">Новая операция</string>
+    <string name="edit_transaction">Редактирование операции</string>
+
+    <string name="amount">Сумма</string>
+    <string name="date">Дата</string>
+    <string name="comment">Комментарий</string>
+
+    <string name="save">Сохранить</string>
+    <string name="update">Обновить</string>
+    <string name="delete">Удалить</string>
+    <string name="cancel">Отмена</string>
+
+    <string name="delete_transaction_title">Удалить операцию?</string>
+    <string name="delete_transaction_message">Это действие нельзя отменить.</string>
+
+    <string name="transaction_history">История операций</string>
+    <string name="search">Поиск</string>
+
+    <string name="statistics_title">Статистика</string>
+
+    <string name="balance">Баланс</string>
+    <string name="operations">Операций</string>
+
+    <string name="expenses_by_category">Расходы по категориям</string>
+
+    <string name="profile">Профиль</string>
+    <string name="user">Пользователь</string>
+
+    <string name="dark_theme">Тёмная тема</string>
+
+    <string name="currency">Валюта</string>
+
+    <string name="notifications">Уведомления</string>
+    <string name="enabled">Включены</string>
+
+    <string name="about_app">О приложении</string>
+    <string name="app_version">v1.0.0</string>
+
+    <string name="today">Сегодня</string>
+    <string name="week">Неделя</string>
+    <string name="month">Месяц</string>
+    <string name="year">Год</string>
+    <string name="all_time">Всё время</string>
+
+</resources>

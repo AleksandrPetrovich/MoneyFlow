@@ -23,8 +23,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.babichdev.moneyflow.R
 import com.babichdev.moneyflow.presentation.app.AppViewModel
 
 @Composable
@@ -44,7 +46,7 @@ fun SettingsScreen(
 
         item {
             Text(
-                text = "Настройки",
+                text = stringResource(R.string.settings),
                 style = MaterialTheme.typography.headlineSmall
             )
         }
@@ -52,8 +54,8 @@ fun SettingsScreen(
         item {
             SettingsItem(
                 icon = { Icon(Icons.Outlined.Person, null) },
-                title = "Профиль",
-                value = "Пользователь"
+                title = stringResource(R.string.profile),
+                value = stringResource(R.string.user)
             )
         }
 
@@ -76,7 +78,7 @@ fun SettingsScreen(
                     )
 
                     Text(
-                        text = "Тёмная тема",
+                        text = stringResource(R.string.dark_theme),
                         modifier = Modifier
                             .weight(1f)
                             .padding(start = 16.dp),
@@ -96,7 +98,7 @@ fun SettingsScreen(
         item {
             SettingsItem(
                 icon = { Icon(Icons.Outlined.Savings, null) },
-                title = "Валюта",
+                title = stringResource(R.string.currency),
                 value = "₽"
             )
         }
@@ -104,16 +106,16 @@ fun SettingsScreen(
         item {
             SettingsItem(
                 icon = { Icon(Icons.Outlined.Notifications, null) },
-                title = "Уведомления",
-                value = "Включены"
+                title = stringResource(R.string.notifications),
+                value = stringResource(R.string.enabled)
             )
         }
 
         item {
             SettingsItem(
                 icon = { Icon(Icons.Outlined.Info, null) },
-                title = "О приложении",
-                value = "v1.0.0"
+                title = stringResource(R.string.about_app),
+                value = stringResource(R.string.app_version)
             )
         }
     }

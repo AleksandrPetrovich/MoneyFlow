@@ -29,8 +29,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.babichdev.moneyflow.R
 import com.babichdev.moneyflow.presentation.components.input.CategoryDropdown
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -72,24 +74,26 @@ fun AddScreen(
     ) {
 
         Text(
-            text = if (viewModel.isEditMode)
-                "Редактирование операции"
-            else
-                "Новая операция",
+            text = stringResource(
+                if (viewModel.isEditMode)
+                    R.string.edit_transaction
+                else
+                    R.string.new_transaction
+            ),
             style = MaterialTheme.typography.headlineSmall
         )
 
         Column {
 
             RowOption(
-                text = "Расход",
+                text = stringResource(R.string.expense),
                 selected = !isIncome
             ) {
                 viewModel.onIncomeChanged(false)
             }
 
             RowOption(
-                text = "Доход",
+                text = stringResource(R.string.income),
                 selected = isIncome
             ) {
                 viewModel.onIncomeChanged(true)
@@ -99,7 +103,9 @@ fun AddScreen(
         OutlinedTextField(
             value = amount,
             onValueChange = viewModel::onAmountChanged,
-            label = { Text("Сумма") },
+            label = {
+                Text(stringResource(R.string.amount))
+            },
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Outlined.AttachMoney,
@@ -129,7 +135,7 @@ fun AddScreen(
                 readOnly = true,
                 enabled = false,
                 label = {
-                    Text("Дата")
+                    Text(stringResource(R.string.date))
                 },
                 leadingIcon = {
                     Icon(
@@ -145,7 +151,9 @@ fun AddScreen(
         OutlinedTextField(
             value = comment,
             onValueChange = viewModel::onCommentChanged,
-            label = { Text("Комментарий") },
+            label = {
+                Text(stringResource(R.string.comment))
+            },
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Outlined.EditNote,
@@ -164,10 +172,12 @@ fun AddScreen(
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(
-                if (viewModel.isEditMode)
-                    "Обновить"
-                else
-                    "Сохранить"
+                stringResource(
+                    if (viewModel.isEditMode)
+                        R.string.update
+                    else
+                        R.string.save
+                )
             )
         }
 
@@ -179,7 +189,7 @@ fun AddScreen(
                 },
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Удалить")
+                Text(stringResource(R.string.delete))
             }
 
         }
@@ -192,10 +202,10 @@ fun AddScreen(
                 showDeleteDialog = false
             },
             title = {
-                Text("Удалить операцию?")
+                Text(stringResource(R.string.delete_transaction_title))
             },
             text = {
-                Text("Это действие нельзя отменить.")
+                Text(stringResource(R.string.delete_transaction_message))
             },
             confirmButton = {
                 Button(
@@ -205,7 +215,7 @@ fun AddScreen(
                         onSaved()
                     }
                 ) {
-                    Text("Удалить")
+                    Text(stringResource(R.string.delete))
                 }
             },
             dismissButton = {
@@ -214,7 +224,7 @@ fun AddScreen(
                         showDeleteDialog = false
                     }
                 ) {
-                    Text("Отмена")
+                    Text(stringResource(R.string.cancel))
                 }
             }
         )
@@ -253,7 +263,7 @@ fun AddScreen(
                         showDatePicker = false
                     }
                 ) {
-                    Text("Отмена")
+                    Text(stringResource(R.string.cancel))
                 }
 
             }

@@ -6,6 +6,7 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.babichdev.moneyflow.presentation.navigation.Screen
@@ -45,12 +46,14 @@ fun BottomNavigationBar(
                 icon = {
                     Icon(
                         imageVector = screen.icon,
-                        contentDescription = screen.title
+                        contentDescription = stringResource(screen.titleRes)
                     )
                 },
 
                 label = {
-                    Text(screen.title)
+                    Text(
+                        text = stringResource(screen.titleRes)
+                    )
                 }
             )
         }

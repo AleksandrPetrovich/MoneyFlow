@@ -15,8 +15,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.babichdev.moneyflow.R
 import com.babichdev.moneyflow.presentation.components.cards.TransactionItem
 
 @Composable
@@ -46,7 +48,7 @@ fun HistoryScreen(
 
         item {
             Text(
-                text = "История операций",
+                text = stringResource(R.string.transaction_history),
                 style = MaterialTheme.typography.headlineSmall
             )
         }
@@ -57,7 +59,7 @@ fun HistoryScreen(
                 onValueChange = { searchText = it },
                 modifier = Modifier.fillMaxWidth(),
                 label = {
-                    Text("Поиск")
+                    Text(stringResource(R.string.search))
                 }
             )
         }

@@ -17,8 +17,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.babichdev.moneyflow.R
 import com.babichdev.moneyflow.presentation.model.PeriodFilter
 import com.babichdev.moneyflow.util.MoneyFormatter
 
@@ -37,7 +39,7 @@ fun StatisticsScreen(
     ) {
 
         Text(
-            text = "Статистика",
+            text = stringResource(R.string.statistics_title),
             style = MaterialTheme.typography.headlineSmall
         )
 
@@ -55,7 +57,9 @@ fun StatisticsScreen(
                         viewModel.setPeriod(period)
                     },
                     label = {
-                        Text(period.title)
+                        Text(
+                            text = stringResource(period.titleRes)
+                        )
                     }
                 )
             }
@@ -64,27 +68,27 @@ fun StatisticsScreen(
         Spacer(modifier = Modifier.height(24.dp))
 
         StatCard(
-            title = "Доходы",
+            title = stringResource(R.string.income),
             value = MoneyFormatter.format(statistics.income)
         )
 
         StatCard(
-            title = "Расходы",
+            title = stringResource(R.string.expense),
             value = MoneyFormatter.format(statistics.expense)
         )
 
         StatCard(
-            title = "Баланс",
+            title = stringResource(R.string.balance),
             value = MoneyFormatter.format(statistics.balance)
         )
 
         StatCard(
-            title = "Операций",
+            title = stringResource(R.string.operations),
             value = statistics.operationsCount.toString()
         )
 
         Text(
-            text = "Расходы по категориям",
+            text = stringResource(R.string.expenses_by_category),
             style = MaterialTheme.typography.titleLarge
         )
 
@@ -107,7 +111,7 @@ fun StatisticsScreen(
                     )
 
                     Text(
-                        text = "${category.amount.toInt()} ₽",
+                        text = MoneyFormatter.format(category.amount),
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.primary
                     )

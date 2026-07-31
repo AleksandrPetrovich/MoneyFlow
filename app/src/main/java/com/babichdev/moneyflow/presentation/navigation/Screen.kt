@@ -7,28 +7,29 @@ import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.List
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.babichdev.moneyflow.R
 
 sealed class Screen(
     val route: String,
-    val title: String,
+    val titleRes: Int,
     val icon: ImageVector
 ) {
 
     data object Home : Screen(
         route = "home",
-        title = "Главная",
+        titleRes = R.string.home,
         icon = Icons.Outlined.Home
     )
 
     data object History : Screen(
         route = "history",
-        title = "История",
+        titleRes = R.string.history,
         icon = Icons.Outlined.List
     )
 
     object Add : Screen(
         route = "add?transactionId={transactionId}",
-        title = "Добавить",
+        titleRes = R.string.add,
         icon = Icons.Default.Add
     )
 
@@ -42,13 +43,13 @@ sealed class Screen(
 
     data object Statistics : Screen(
         route = "statistics",
-        title = "Статистика",
+        titleRes = R.string.statistics,
         icon = Icons.Outlined.BarChart
     )
 
     data object Settings : Screen(
         route = "settings",
-        title = "Настройки",
+        titleRes = R.string.settings,
         icon = Icons.Outlined.Settings
     )
 
