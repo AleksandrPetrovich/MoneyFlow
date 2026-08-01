@@ -58,4 +58,10 @@
     <string name="year">Year</string>
     <string name="all_time">All time</string>
 
+    <string name="empty_history_title">No transactions yet</string>
+    <string name="empty_history_message">Add your first transaction to see it here.</string>
+
+    <string name="empty_statistics_title">No statistics yet</string>
+    <string name="empty_statistics_message">Statistics will appear after adding transactions.</string>
+
 </resources>

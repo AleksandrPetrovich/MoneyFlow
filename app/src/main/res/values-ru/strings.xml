@@ -58,4 +58,10 @@
     <string name="year">Год</string>
     <string name="all_time">Всё время</string>
 
+    <string name="empty_history_title">Пока нет операций</string>
+    <string name="empty_history_message">Добавьте первую операцию, чтобы увидеть её здесь.</string>
+
+    <string name="empty_statistics_title">Пока нет статистики</string>
+    <string name="empty_statistics_message">Статистика появится после добавления операций.</string>
+
 </resources>

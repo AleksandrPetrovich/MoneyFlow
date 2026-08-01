@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.ReceiptLong
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -20,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.babichdev.moneyflow.R
 import com.babichdev.moneyflow.presentation.components.cards.TransactionItem
+import com.babichdev.moneyflow.presentation.components.common.EmptyState
 
 @Composable
 fun HistoryScreen(
@@ -38,6 +41,15 @@ fun HistoryScreen(
             transaction.category.contains(searchText, ignoreCase = true) ||
                     transaction.comment.contains(searchText, ignoreCase = true)
         }
+    }
+
+    if (filteredTransactions.isEmpty()) {
+        EmptyState(
+            icon = Icons.Outlined.ReceiptLong,
+            title = stringResource(R.string.empty_history_title),
+            message = stringResource(R.string.empty_history_message)
+        )
+        return
     }
 
     LazyColumn(
