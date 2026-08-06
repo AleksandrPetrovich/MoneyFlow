@@ -110,6 +110,7 @@ fun AppNavHost(
         }
 
         composable(Screen.Settings.route) {
+
             SettingsScreen(
                 viewModel = appViewModel
             )

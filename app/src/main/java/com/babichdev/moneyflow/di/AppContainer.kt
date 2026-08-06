@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.babichdev.moneyflow.data.local.database.MoneyFlowDatabase
 import com.babichdev.moneyflow.data.preferences.SettingsRepository
 import com.babichdev.moneyflow.data.repository.TransactionRepository
+import com.babichdev.moneyflow.domain.usecase.ExportTransactionsUseCase
 
 class AppContainer(context: Context) {
 
@@ -17,6 +18,8 @@ class AppContainer(context: Context) {
     val repository = TransactionRepository(
         database.transactionDao()
     )
+
+    val exportTransactionsUseCase = ExportTransactionsUseCase(repository)
 
     val settingsRepository = SettingsRepository(
         context

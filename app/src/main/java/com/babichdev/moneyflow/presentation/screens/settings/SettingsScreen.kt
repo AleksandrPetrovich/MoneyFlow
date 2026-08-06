@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ChevronRight
 import androidx.compose.material.icons.outlined.DarkMode
+import androidx.compose.material.icons.outlined.FileDownload
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Person
@@ -105,6 +106,19 @@ fun SettingsScreen(
 
         item {
             SettingsItem(
+                icon = {
+                    Icon(Icons.Outlined.FileDownload, null)
+                },
+                title = stringResource(R.string.export_transactions),
+                value = "",
+                onClick = {
+                    viewModel.exportTransactions()
+                }
+            )
+        }
+
+        item {
+            SettingsItem(
                 icon = { Icon(Icons.Outlined.Notifications, null) },
                 title = stringResource(R.string.notifications),
                 value = stringResource(R.string.enabled)
@@ -125,10 +139,14 @@ fun SettingsScreen(
 private fun SettingsItem(
     icon: @Composable () -> Unit,
     title: String,
-    value: String
+    value: String,
+    onClick: () -> Unit = {}
 ) {
     Card(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 2.dp),
+        onClick = onClick
     ) {
         Row(
             modifier = Modifier

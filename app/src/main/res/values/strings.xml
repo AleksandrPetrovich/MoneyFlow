@@ -64,4 +64,8 @@
     <string name="empty_statistics_title">No statistics yet</string>
     <string name="empty_statistics_message">Statistics will appear after adding transactions.</string>
 
+    <string name="export_transactions">Export transactions</string>
+
+    <string name="export_file_title">Export transactions</string>
+
 </resources>

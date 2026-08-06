@@ -64,4 +64,8 @@
     <string name="empty_statistics_title">Пока нет статистики</string>
     <string name="empty_statistics_message">Статистика появится после добавления операций.</string>
 
+    <string name="export_transactions">Export transactions</string>
+
+    <string name="export_file_title">Экспорт транзакций</string>
+
 </resources>

@@ -22,7 +22,8 @@ class MainActivity : ComponentActivity() {
 
             val appViewModel: AppViewModel = viewModel(
                 factory = AppViewModelFactory(
-                    container.settingsRepository
+                    settingsRepository = container.settingsRepository,
+                    exportTransactionsUseCase = container.exportTransactionsUseCase
                 )
             )
 
