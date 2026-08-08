@@ -16,15 +16,22 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.babichdev.moneyflow.R
 import com.babichdev.moneyflow.presentation.components.cards.BalanceCard
 import com.babichdev.moneyflow.presentation.components.cards.TransactionItem
+import com.babichdev.moneyflow.presentation.model.Currency
+import kotlinx.coroutines.flow.Flow
 
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel,
+    currency: Flow<Currency>,
     onEditTransaction: (Long) -> Unit = {}
 ) {
     val transactions by viewModel.transactions.collectAsStateWithLifecycle()
 
     val balance by viewModel.balance.collectAsStateWithLifecycle()
+
+    val currentCurrency by currency.collectAsStateWithLifecycle(
+        initialValue = Currency.RUB
+    )
 
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -36,7 +43,8 @@ fun HomeScreen(
             BalanceCard(
                 balance = balance.balance,
                 income = balance.income,
-                expense = balance.expense
+                expense = balance.expense,
+                currency = currentCurrency
             )
         }
 
@@ -51,6 +59,7 @@ fun HomeScreen(
 
             TransactionItem(
                 transaction = transaction,
+                currency = currentCurrency,
                 onLongClick = {
                     onEditTransaction(transaction.id)
                 }

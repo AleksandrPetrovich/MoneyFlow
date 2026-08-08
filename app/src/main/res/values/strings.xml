@@ -68,4 +68,8 @@
 
     <string name="export_file_title">Export transactions</string>
 
+    <string name="currency_rub">Russian ruble</string>
+    <string name="currency_usd">US dollar</string>
+    <string name="currency_eur">Euro</string>
+
 </resources>

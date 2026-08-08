@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.babichdev.moneyflow.presentation.model.Categories
+import com.babichdev.moneyflow.presentation.model.Currency
 import com.babichdev.moneyflow.presentation.model.TransactionUi
 import com.babichdev.moneyflow.ui.theme.ExpenseColor
 import com.babichdev.moneyflow.ui.theme.IncomeColor
@@ -24,6 +25,7 @@ import com.babichdev.moneyflow.util.MoneyFormatter
 @Composable
 fun TransactionItem(
     transaction: TransactionUi,
+    currency: Currency,
     onLongClick: () -> Unit = {}
 ) {
     Card(
@@ -60,9 +62,15 @@ fun TransactionItem(
 
                     Text(
                         text = if (transaction.isIncome)
-                            "+${MoneyFormatter.format(transaction.amount)}"
+                            "+${MoneyFormatter.format(
+                                transaction.amount,
+                                currency
+                            )}"
                         else
-                            "-${MoneyFormatter.format(transaction.amount)}",
+                            "-${MoneyFormatter.format(
+                                transaction.amount,
+                                currency
+                            )}",
                         color = if (transaction.isIncome)
                             IncomeColor
                         else

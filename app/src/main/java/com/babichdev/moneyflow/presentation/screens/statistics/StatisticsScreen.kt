@@ -31,17 +31,24 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.babichdev.moneyflow.R
 import com.babichdev.moneyflow.presentation.components.common.EmptyState
 import com.babichdev.moneyflow.presentation.model.Categories
+import com.babichdev.moneyflow.presentation.model.Currency
 import com.babichdev.moneyflow.presentation.model.PeriodFilter
 import com.babichdev.moneyflow.ui.theme.ExpenseColor
 import com.babichdev.moneyflow.ui.theme.IncomeColor
 import com.babichdev.moneyflow.util.MoneyFormatter
+import kotlinx.coroutines.flow.Flow
 
 @Composable
 fun StatisticsScreen(
-    viewModel: StatisticsViewModel
+    viewModel: StatisticsViewModel,
+    currency: Flow<Currency>
 ) {
 
     val statistics by viewModel.statistics.collectAsStateWithLifecycle()
+
+    val currentCurrency by currency.collectAsStateWithLifecycle(
+        initialValue = Currency.RUB
+    )
 
     if (statistics.operationsCount == 0) {
         EmptyState(
@@ -90,19 +97,28 @@ fun StatisticsScreen(
 
         StatCard(
             title = stringResource(R.string.income),
-            value = MoneyFormatter.format(statistics.income),
+            value = MoneyFormatter.format(
+                statistics.income,
+                currentCurrency
+            ),
             color = IncomeColor
         )
 
         StatCard(
             title = stringResource(R.string.expense),
-            value = MoneyFormatter.format(statistics.expense),
+            value = MoneyFormatter.format(
+                statistics.expense,
+                currentCurrency
+            ),
             color = ExpenseColor
         )
 
         StatCard(
             title = stringResource(R.string.balance),
-            value = MoneyFormatter.format(statistics.balance),
+            value = MoneyFormatter.format(
+                statistics.balance,
+                currentCurrency
+            ),
             color = MaterialTheme.colorScheme.primary
         )
 
@@ -145,7 +161,10 @@ fun StatisticsScreen(
                         )
 
                         Text(
-                            text = MoneyFormatter.format(category.amount),
+                            text = MoneyFormatter.format(
+                                category.amount,
+                                currentCurrency
+                            ),
                             color = ExpenseColor,
                             fontWeight = FontWeight.SemiBold
                         )

@@ -22,6 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.babichdev.moneyflow.R
+import com.babichdev.moneyflow.presentation.model.Currency
 import com.babichdev.moneyflow.ui.theme.ExpenseColor
 import com.babichdev.moneyflow.ui.theme.IncomeColor
 import com.babichdev.moneyflow.util.MoneyFormatter
@@ -30,7 +31,8 @@ import com.babichdev.moneyflow.util.MoneyFormatter
 fun BalanceCard(
     balance: Double,
     income: Double,
-    expense: Double
+    expense: Double,
+    currency: Currency
 ) {
     Card(
         modifier = Modifier.fillMaxWidth(),
@@ -49,7 +51,10 @@ fun BalanceCard(
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = MoneyFormatter.format(balance),
+                text = MoneyFormatter.format(
+                    balance,
+                    currency
+                ),
                 style = MaterialTheme.typography.displaySmall,
                 fontWeight = FontWeight.Bold
             )
@@ -78,7 +83,10 @@ fun BalanceCard(
                     Spacer(modifier = Modifier.height(4.dp))
 
                     Text(
-                        text = MoneyFormatter.format(income),
+                        text = MoneyFormatter.format(
+                            income,
+                            currency
+                        ),
                         style = MaterialTheme.typography.titleMedium,
                         color = IncomeColor,
                         fontWeight = FontWeight.SemiBold
@@ -102,7 +110,10 @@ fun BalanceCard(
                     Spacer(modifier = Modifier.height(4.dp))
 
                     Text(
-                        text = MoneyFormatter.format(expense),
+                        text = MoneyFormatter.format(
+                            expense,
+                            currency
+                        ),
                         style = MaterialTheme.typography.titleMedium,
                         color = ExpenseColor,
                         fontWeight = FontWeight.SemiBold

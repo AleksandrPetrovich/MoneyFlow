@@ -68,4 +68,8 @@
 
     <string name="export_file_title">Экспорт транзакций</string>
 
+    <string name="currency_rub">Российский рубль</string>
+    <string name="currency_usd">Доллар США</string>
+    <string name="currency_eur">Евро</string>
+
 </resources>
