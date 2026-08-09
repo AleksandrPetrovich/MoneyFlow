@@ -7,10 +7,10 @@ import com.babichdev.moneyflow.domain.usecase.ExportTransactionsUseCase
 import com.babichdev.moneyflow.presentation.model.Currency
 import com.babichdev.moneyflow.presentation.model.SettingsUiState
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class AppViewModel(
@@ -19,13 +19,21 @@ class AppViewModel(
 ) : ViewModel() {
 
 
-    private val _settings =
-        MutableStateFlow(
-            SettingsUiState()
-        )
-
     val settings =
-        _settings.asStateFlow()
+        combine(
+            settingsRepository.darkTheme,
+            settingsRepository.currency
+        ) { darkTheme, currency ->
+
+            SettingsUiState(
+                darkTheme = darkTheme,
+                currency = currency
+            )
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = SettingsUiState()
+        )
 
     private val _exportCsv = MutableSharedFlow<String>()
 
@@ -37,16 +45,7 @@ class AppViewModel(
         enabled: Boolean
     ) {
         viewModelScope.launch {
-
-            settingsRepository.setDarkTheme(
-                enabled
-            )
-
-            _settings.update {
-                it.copy(
-                    darkTheme = enabled
-                )
-            }
+            settingsRepository.setDarkTheme(enabled)
         }
     }
 
@@ -55,16 +54,7 @@ class AppViewModel(
         currency: Currency
     ) {
         viewModelScope.launch {
-
-            settingsRepository.setCurrency(
-                currency
-            )
-
-            _settings.update {
-                it.copy(
-                    currency = currency
-                )
-            }
+            settingsRepository.setCurrency(currency)
         }
     }
 
