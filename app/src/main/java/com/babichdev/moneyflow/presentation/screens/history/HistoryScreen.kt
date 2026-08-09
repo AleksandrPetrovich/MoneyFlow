@@ -24,12 +24,11 @@ import com.babichdev.moneyflow.R
 import com.babichdev.moneyflow.presentation.components.cards.TransactionItem
 import com.babichdev.moneyflow.presentation.components.common.EmptyState
 import com.babichdev.moneyflow.presentation.model.Currency
-import kotlinx.coroutines.flow.Flow
 
 @Composable
 fun HistoryScreen(
     viewModel: HistoryViewModel,
-    currency: Flow<Currency>
+    currency: Currency
 ) {
 
     var searchText by remember { mutableStateOf("") }
@@ -45,10 +44,6 @@ fun HistoryScreen(
                     transaction.comment.contains(searchText, ignoreCase = true)
         }
     }
-
-    val currentCurrency by currency.collectAsStateWithLifecycle(
-        initialValue = Currency.RUB
-    )
 
     if (filteredTransactions.isEmpty()) {
         EmptyState(
@@ -86,7 +81,7 @@ fun HistoryScreen(
         items(filteredTransactions) { transaction ->
             TransactionItem(
                 transaction = transaction,
-                currency = currentCurrency,
+                currency = currency,
                 onLongClick = {}
             )
         }

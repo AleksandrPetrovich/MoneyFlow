@@ -27,10 +27,9 @@ class MainActivity : ComponentActivity() {
                 )
             )
 
-            val darkTheme by appViewModel.darkTheme
-                .collectAsStateWithLifecycle(
-                    initialValue = false
-                )
+            val settings by appViewModel.settings.collectAsStateWithLifecycle()
+
+            val darkTheme = settings.darkTheme
 
             MoneyFlowTheme(
                 darkTheme = darkTheme

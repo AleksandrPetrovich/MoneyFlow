@@ -36,19 +36,14 @@ import com.babichdev.moneyflow.presentation.model.PeriodFilter
 import com.babichdev.moneyflow.ui.theme.ExpenseColor
 import com.babichdev.moneyflow.ui.theme.IncomeColor
 import com.babichdev.moneyflow.util.MoneyFormatter
-import kotlinx.coroutines.flow.Flow
 
 @Composable
 fun StatisticsScreen(
     viewModel: StatisticsViewModel,
-    currency: Flow<Currency>
+    currency: Currency
 ) {
 
     val statistics by viewModel.statistics.collectAsStateWithLifecycle()
-
-    val currentCurrency by currency.collectAsStateWithLifecycle(
-        initialValue = Currency.RUB
-    )
 
     if (statistics.operationsCount == 0) {
         EmptyState(
@@ -99,7 +94,7 @@ fun StatisticsScreen(
             title = stringResource(R.string.income),
             value = MoneyFormatter.format(
                 statistics.income,
-                currentCurrency
+                currency
             ),
             color = IncomeColor
         )
@@ -108,7 +103,7 @@ fun StatisticsScreen(
             title = stringResource(R.string.expense),
             value = MoneyFormatter.format(
                 statistics.expense,
-                currentCurrency
+                currency
             ),
             color = ExpenseColor
         )
@@ -117,7 +112,7 @@ fun StatisticsScreen(
             title = stringResource(R.string.balance),
             value = MoneyFormatter.format(
                 statistics.balance,
-                currentCurrency
+                currency
             ),
             color = MaterialTheme.colorScheme.primary
         )
@@ -163,7 +158,7 @@ fun StatisticsScreen(
                         Text(
                             text = MoneyFormatter.format(
                                 category.amount,
-                                currentCurrency
+                                currency
                             ),
                             color = ExpenseColor,
                             fontWeight = FontWeight.SemiBold

@@ -17,21 +17,16 @@ import com.babichdev.moneyflow.R
 import com.babichdev.moneyflow.presentation.components.cards.BalanceCard
 import com.babichdev.moneyflow.presentation.components.cards.TransactionItem
 import com.babichdev.moneyflow.presentation.model.Currency
-import kotlinx.coroutines.flow.Flow
 
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel,
-    currency: Flow<Currency>,
+    currency: Currency,
     onEditTransaction: (Long) -> Unit = {}
 ) {
     val transactions by viewModel.transactions.collectAsStateWithLifecycle()
 
     val balance by viewModel.balance.collectAsStateWithLifecycle()
-
-    val currentCurrency by currency.collectAsStateWithLifecycle(
-        initialValue = Currency.RUB
-    )
 
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -44,7 +39,7 @@ fun HomeScreen(
                 balance = balance.balance,
                 income = balance.income,
                 expense = balance.expense,
-                currency = currentCurrency
+                currency = currency
             )
         }
 
@@ -59,7 +54,7 @@ fun HomeScreen(
 
             TransactionItem(
                 transaction = transaction,
-                currency = currentCurrency,
+                currency = currency,
                 onLongClick = {
                     onEditTransaction(transaction.id)
                 }

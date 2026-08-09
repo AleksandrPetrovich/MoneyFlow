@@ -1,7 +1,9 @@
 package com.babichdev.moneyflow.presentation.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -32,6 +34,9 @@ fun AppNavHost(
     appViewModel: AppViewModel,
     modifier: Modifier = Modifier
 ) {
+
+    val settings by appViewModel.settings.collectAsStateWithLifecycle()
+
     NavHost(
         navController = navController,
         startDestination = Screen.Home.route,
@@ -48,7 +53,7 @@ fun AppNavHost(
 
             HomeScreen(
                 viewModel = viewModel,
-                currency = appViewModel.currency,
+                currency = settings.currency,
                 onEditTransaction = { transactionId ->
                     navController.navigate(
                         Screen.Add.createRoute(transactionId)
@@ -67,7 +72,7 @@ fun AppNavHost(
 
             HistoryScreen(
                 viewModel = viewModel,
-                currency = appViewModel.currency
+                currency = settings.currency
             )
         }
 
@@ -109,7 +114,7 @@ fun AppNavHost(
 
             StatisticsScreen(
                 viewModel = viewModel,
-                currency = appViewModel.currency
+                currency = settings.currency
             )
         }
 

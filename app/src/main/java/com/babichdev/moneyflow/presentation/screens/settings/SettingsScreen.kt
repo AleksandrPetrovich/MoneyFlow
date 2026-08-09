@@ -47,13 +47,11 @@ fun SettingsScreen(
     onExportClick: () -> Unit
 ) {
 
-    val darkTheme by viewModel.darkTheme.collectAsStateWithLifecycle(
-        initialValue = false
-    )
+    val settings by viewModel.settings.collectAsStateWithLifecycle()
 
-    val currency by viewModel.currency.collectAsStateWithLifecycle(
-        initialValue = Currency.RUB
-    )
+    val darkTheme = settings.darkTheme
+
+    val currency = settings.currency
 
     var showCurrencyDialog by remember {
         mutableStateOf(false)
