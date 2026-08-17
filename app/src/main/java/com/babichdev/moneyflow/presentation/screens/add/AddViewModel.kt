@@ -5,8 +5,10 @@ import androidx.lifecycle.viewModelScope
 import com.babichdev.moneyflow.data.local.entity.TransactionEntity
 import com.babichdev.moneyflow.data.repository.TransactionRepository
 import com.babichdev.moneyflow.presentation.model.Categories
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
@@ -52,6 +54,12 @@ class AddViewModel(
 
     private val _date = MutableStateFlow(System.currentTimeMillis())
     val date: StateFlow<Long> = _date.asStateFlow()
+
+    private val _transactionSaved = MutableSharedFlow<Unit>()
+    val transactionSaved = _transactionSaved.asSharedFlow()
+
+    private val _transactionDeleted = MutableSharedFlow<Unit>()
+    val transactionDeleted = _transactionDeleted.asSharedFlow()
 
     val canSave: StateFlow<Boolean> =
         combine(
@@ -129,8 +137,9 @@ class AddViewModel(
                         date = _date.value
                     )
                 )
-
             }
+
+            _transactionSaved.emit(Unit)
         }
     }
 
@@ -139,7 +148,10 @@ class AddViewModel(
         if (!isEditMode) return
 
         viewModelScope.launch {
+
             repository.deleteTransaction(transactionId)
+
+            _transactionDeleted.emit(Unit)
         }
     }
 }

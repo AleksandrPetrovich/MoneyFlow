@@ -26,6 +26,7 @@ fun MoneyFlowApp(
     appContainer: AppContainer,
     appViewModel: AppViewModel
 ) {
+    println("MONEYFLOW: MoneyFlowApp COMPOSED")
 
     val navController = rememberNavController()
 

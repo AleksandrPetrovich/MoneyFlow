@@ -53,12 +53,6 @@ sealed class Screen(
         icon = Icons.Outlined.Settings
     )
 
-    data object Currency : Screen(
-        route = "currency",
-        titleRes = R.string.currency,
-        icon = Icons.Outlined.Settings
-    )
-
     companion object {
         val bottomNavigationItems = listOf(
             Home,

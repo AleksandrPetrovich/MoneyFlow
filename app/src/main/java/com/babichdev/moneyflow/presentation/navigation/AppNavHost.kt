@@ -15,7 +15,6 @@ import com.babichdev.moneyflow.presentation.app.AppViewModel
 import com.babichdev.moneyflow.presentation.screens.add.AddScreen
 import com.babichdev.moneyflow.presentation.screens.add.AddViewModel
 import com.babichdev.moneyflow.presentation.screens.add.AddViewModelFactory
-import com.babichdev.moneyflow.presentation.screens.currency.CurrencyScreen
 import com.babichdev.moneyflow.presentation.screens.history.HistoryScreen
 import com.babichdev.moneyflow.presentation.screens.history.HistoryViewModel
 import com.babichdev.moneyflow.presentation.screens.history.HistoryViewModelFactory
@@ -124,12 +123,6 @@ fun AppNavHost(
                 viewModel = appViewModel,
                 onExportClick = {}
             )
-        }
-
-        composable(Screen.Currency.route) {
-
-            CurrencyScreen()
-
         }
     }
 }

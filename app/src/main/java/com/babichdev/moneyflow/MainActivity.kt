@@ -14,8 +14,13 @@ import com.babichdev.moneyflow.ui.theme.MoneyFlowTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        println("MONEYFLOW: MainActivity onCreate START")
+
         enableEdgeToEdge()
+
         setContent {
+            println("MONEYFLOW: setContent")
 
             val container =
                 (application as MoneyFlowApplication).container
@@ -41,5 +46,7 @@ class MainActivity : ComponentActivity() {
                 )
             }
         }
+
+        println("MONEYFLOW: MainActivity onCreate END")
     }
 }

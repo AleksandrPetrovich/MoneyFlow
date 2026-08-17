@@ -72,4 +72,6 @@
     <string name="currency_usd">Доллар США</string>
     <string name="currency_eur">Евро</string>
 
+    <string name="category">Категория</string>
+
 </resources>

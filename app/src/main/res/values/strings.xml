@@ -72,4 +72,6 @@
     <string name="currency_usd">US dollar</string>
     <string name="currency_eur">Euro</string>
 
+    <string name="category">Category</string>
+
 </resources>
